@@ -47,46 +47,43 @@ class ReportGenerator:
             if "[results_table]" in paragraph.text:
                 # Create a new style for market titles
                 self.create_market_title_style(doc)
-                
+
                 results_data = self.results_tab.get_results_data()
-                
+
                 # Insert content before the placeholder paragraph
                 for index, (market, data) in enumerate(results_data.items(), start=1):
                     # Add market title with numbering
                     market_title = doc.add_paragraph(f"3.{index} {market}", style='MarketTitle')
-                    doc.paragraphs.insert(i, market_title)
-                    i += 1
-                    
+                    paragraph._element.addnext(market_title._element)
+
                     # Add Equity Curve image
                     if data['equity_curve']:
                         image_stream = io.BytesIO(data['equity_curve'])
                         img_paragraph = doc.add_paragraph()
                         img_paragraph.add_run().add_picture(image_stream, width=Inches(6))
-                        doc.paragraphs.insert(i, img_paragraph)
-                        i += 1
+                        market_title._element.addnext(img_paragraph._element)
 
                     # Add Performance Metrics image
                     if data['performance_metrics']:
                         image_stream = io.BytesIO(data['performance_metrics'])
                         img_paragraph = doc.add_paragraph()
                         img_paragraph.add_run().add_picture(image_stream, width=Inches(6))
-                        doc.paragraphs.insert(i, img_paragraph)
-                        i += 1
+                        market_title._element.addnext(img_paragraph._element)
 
                     # Add notes
                     if data['notes']:
                         notes_paragraph = doc.add_paragraph(data['notes'])
-                        doc.paragraphs.insert(i, notes_paragraph)
-                        i += 1
+                        market_title._element.addnext(notes_paragraph._element)
 
                     # Add an empty paragraph for spacing between markets
                     spacing_paragraph = doc.add_paragraph()
-                    doc.paragraphs.insert(i, spacing_paragraph)
-                    i += 1
+                    market_title._element.addnext(spacing_paragraph._element)
 
                 # Remove the original placeholder paragraph
-                doc.paragraphs[i]._element.getparent().remove(doc.paragraphs[i]._element)
+                p = paragraph._element
+                p.getparent().remove(p)
                 break
+
 
     def create_market_title_style(self, doc):
         styles = doc.styles

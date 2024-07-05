@@ -11,7 +11,7 @@ class EnhancedReportGeneratorGUI:
     def __init__(self, master):
         self.master = master
         self.master.title("Enhanced Report Generator")
-        self.master.geometry("1000x800")
+        self.master.geometry("1000x900")
 
         self.notebook = ttk.Notebook(master)
         self.notebook.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)

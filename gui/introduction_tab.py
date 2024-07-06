@@ -109,6 +109,9 @@ class IntroductionTab:
                 for i, key in enumerate(['timeframe', 'data_source', 'optimisation_timespan', 'out_of_sample_timespan']):
                     self.market_data.set_market_data(market_name, key, values[i+1])
 
+        print("Markets saved in IntroductionTab:", markets)  # Debug print
+        print("Markets in market_data after saving:", self.market_data.get_markets())  # Debug print
+        
         # Notify observers
         self.notify_observers('update', markets)
 
@@ -117,9 +120,10 @@ class IntroductionTab:
     def add_observer(self, observer):
         self.observers.append(observer)
 
-    def notify_observers(self, action, market):
+    def notify_observers(self, action, markets):
+        print("Notifying observers with markets:", markets) # Debug print
         for observer in self.observers:
-            observer(action, market)
+            observer(action, markets)
 
     def get_strategy_name(self):
         return self.strategy_name.get()

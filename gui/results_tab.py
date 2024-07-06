@@ -9,7 +9,7 @@ class ResultsTab:
         notebook.add(self.frame, text="Results")
         self.market_data = market_data
         self.create_widgets()
-        self.update_market_dropdown(self.market_data.get_markets())
+        self.update_market_dropdown()
 
     def create_widgets(self):
         tk.Label(self.frame, text="Select Market:").grid(row=0, column=0, sticky="e", padx=5, pady=5)
@@ -43,11 +43,12 @@ class ResultsTab:
         self.frame.grid_rowconfigure(3, weight=1)
         self.frame.grid_columnconfigure(1, weight=1)
 
-    def update_market_dropdown(self, markets):
+    def update_market_dropdown(self, markets=None):
+        if markets is None:
+            markets = list(self.market_data.get_markets())
         self.market_dropdown['values'] = markets
         if markets and not self.market_var.get():
             self.market_var.set(markets[0])
-        self.load_market_data(None)
 
     def on_market_change(self, action, markets):
         if action == 'update':

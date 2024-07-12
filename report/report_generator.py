@@ -43,10 +43,26 @@ class ReportGenerator:
                             paragraph.text = paragraph.text.replace(placeholder, replacement)
 
     def add_introduction_section(self, doc):
-        self.replace_placeholder(doc, "[strategy_name]", self.intro_tab.get_strategy_name())
-        self.replace_placeholder(doc, "[target_performance_parameter]", self.intro_tab.get_target_performance())
-        self.replace_placeholder(doc, "[optimisation_method]", self.intro_tab.get_optimisation_method())
+        
+        # TODO: Make points align left. Looks weird aligned middle.
+        
+        intro_text = f"""
 
+This report presents the optimisation results for {self.intro_tab.get_strategy_name()}, focusing on enhancing its performance through parameter tuning. Our analysis aimed to {self.intro_tab.get_specific_goal()}.
+
+Key Points:
+• Optimisation Method: {self.intro_tab.get_optimisation_method()}
+• Target Performance Metric: {self.intro_tab.get_target_performance()}
+• Data Range: [brief description of the data used, e.g., "5 years of historical data (2018-2023)"]
+
+Sections 2.0 and 3.0 provide detailed insights into the optimisation parameters and resulting performance metrics, respectively.
+
+The following table summarises the markets and timeframes used in this optimisation:"""
+
+        # 1
+        self.replace_placeholder(doc, "[intro_text]", intro_text)
+
+        # 2
         for paragraph in doc.paragraphs:
             if "[intro_table]" in paragraph.text:
                 table = doc.add_table(rows=1, cols=5)
@@ -64,6 +80,9 @@ class ReportGenerator:
                 p = paragraph._element
                 p.getparent().replace(p, table._element)
                 break
+
+        # 3
+        self.replace_placeholder(doc, "[strategy_name]", self.intro_tab.get_strategy_name())
         
     def add_results_section(self, doc):
         for i, paragraph in enumerate(doc.paragraphs):
@@ -111,13 +130,13 @@ class ReportGenerator:
         
         disclaimer_text = (
             "This document is provided for informational purposes only. Trading in the financial markets involves "
-            "significant risk and may not be suitable for all investors. Past performance is not indicative of future results.\n\n"
+            "significant risk and may not be suitable for all investors. Past performance is not indicative of future results. "
             "Users of related software should conduct their own research and seek advice from a qualified financial advisor "
             "before making any investment decisions. This report and any associated software do not constitute financial "
             "advice and are not regulated by financial authorities.\n\n"
             "While efforts are made to ensure accuracy, the data, analysis, and any predictions or forecasts may not "
             "always be error-free and do not guarantee profits or predict market movements. Users are solely responsible "
-            "for their investment decisions and any resulting outcomes.\n\n"
+            "for their investment decisions and any resulting outcomes."
             "Data Mechanics Ltd. is not responsible for any financial losses incurred through the use of any associated "
             "software or any information included in this report or any related material. By using this report or "
             "associated software, you acknowledge and accept these terms and limitations."

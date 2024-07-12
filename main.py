@@ -1,16 +1,14 @@
 import tkinter as tk
 from tkinter import ttk
-from gui.introduction_tab import IntroductionTab
-from gui.parameter_sets_tab import ParameterSetsTab
-from gui.results_tab import ResultsTab
-from data.market_data import MarketData
-from report.report_generator import ReportGenerator
+from gui import IntroductionTab, ParameterSetsTab, ResultsTab
+from data import MarketData
+from report import ReportGenerator
 
 class EnhancedReportGeneratorGUI:
     def __init__(self, master):
         self.master = master
         self.master.title("Enhanced Report Generator")
-        self.master.geometry("1000x800")
+        self.master.geometry("1000x900")
 
         self.notebook = ttk.Notebook(master)
         self.notebook.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)

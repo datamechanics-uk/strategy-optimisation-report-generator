@@ -15,6 +15,10 @@ class IntroductionTab:
         tk.Label(self.frame, text="Strategy Name:").grid(row=0, column=0, sticky="e", padx=5, pady=5)
         self.strategy_name = tk.Entry(self.frame, width=50)
         self.strategy_name.grid(row=0, column=1, padx=5, pady=5)
+        
+        tk.Label(self.frame, text="Specific Goal:").grid(row=1, column=0, sticky="e", padx=5, pady=5)
+        self.specific_goal = tk.Entry(self.frame, width=80)
+        self.specific_goal.grid(row=1, column=1, padx=5, pady=5)
 
         # Create a style
         style = ttk.Style()
@@ -27,7 +31,7 @@ class IntroductionTab:
         for col in columns:
             self.tree.heading(col, text=col)
             self.tree.column(col, width=120, anchor='center')
-        self.tree.grid(row=1, column=0, columnspan=2, padx=5, pady=5, sticky='nsew')
+        self.tree.grid(row=2, column=0, columnspan=2, padx=5, pady=5, sticky='nsew')
 
         # Add alternating row colors
         self.tree.tag_configure('oddrow', background='#FFFFFF')
@@ -127,6 +131,9 @@ class IntroductionTab:
 
     def get_strategy_name(self):
         return self.strategy_name.get()
+    
+    def get_specific_goal(self):
+        return self.specific_goal.get()
 
     def get_target_performance(self):
         return self.target_performance.get()
